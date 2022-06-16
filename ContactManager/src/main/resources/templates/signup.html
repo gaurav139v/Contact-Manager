@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="base::layout(~{::section})">
+<head>
+	<meta charset="UTF-8" />
+	<title>Home Page</title>
+</head>
+<body>
+
+	<section class="signup-banner">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-8 offset-md-2">
+					<div class="my-card">
+						<div class="container text-center">
+							<img style="width:50px" th:src="@{/img/add-user.png}" alt="icon">
+						</div>
+						<h3 class="text-center">Sign Up</h3>
+						
+						<form action="" th:action="@{/do-signup}" method="post" th:object="${user}">
+							<div class="form-group">						    
+							    <label for="name-field">Name</label>
+							    
+							    <input 
+							    	type="name"
+							     	class="form-control"
+							        id="name-field"
+							        aria-describedby="name-field"
+									placeholder="Enter name"
+									name="name"
+									th:value="${user.name}"/>		    
+						    </div>
+						    
+						    <div class="form-group">						    
+							    <label for="email-field">Email</label>
+							    
+							    <input 
+							    	type="email"
+							     	class="form-control"
+							        id="email-field"
+							        aria-describedby="email-field"
+									placeholder="Enter email"
+									name="email"
+									th:value="${user.email}"/>
+						    </div>
+						    
+						    <div class="form-group">						    
+							    <label for="password-field">Password</label>
+							    
+							    <input 
+							    	type="password"
+							     	class="form-control"
+							        id="password-field"
+							        aria-describedby="password-field"
+									placeholder="Enter password"
+									name="password"
+									/>	  
+						    </div>
+							
+							<div class="form-group">
+								<label for="about-field">About</label>
+								<textarea 
+									name="about"
+								 	id="about-field"
+								    rows="3"
+								    class="form-control"
+								    placeholder="Enter about yourself"
+								    th:value="${user.about}" ></textarea>
+							</div>
+							
+							<div class="form-group form-check text-center">
+								<input 
+									type="checkbox"
+									class="form-check-input"
+									id="aggreement"
+									name="aggreement" />
+									
+								<label for="aggreement">Accept Terms and Conditions</label>
+							</div>
+							
+							<div class="container text-center">
+								<button type="reset" class="btn btn-info">Reset</button>	
+								<button type="submit" class="btn btn-success">Submit</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	
+</body>
+</html>
