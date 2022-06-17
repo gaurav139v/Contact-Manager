@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="base::layout(~{::section})">
+<head>
+	<meta charset="UTF-8" />
+	<title>Home Page</title>
+</head>
+<body>
+		<section class="banner login">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-6 offset-md-3">
+					<div class="my-card login-card">			
+						
+						<div class="container text-center">
+							<img style="width:50px" th:src="@{/img/user.png}" alt="icon">
+						</div>
+						<h3 class="text-center">Login</h3>
+						
+						<div th:if="${param.error}"  class="alert text-center alert-danger" >
+							<span>Invalid username or password</span>
+						</div>
+						
+						<div th:if="${param.logout}"  class="alert text-center alert-success" >
+							<span>You have been logged out</span>
+						</div>
+						
+						<form action="" th:action="@{/signin}" method="post">
+							
+							<div class="form-group">						    
+							    <label for="name-field">Email</label>
+							    
+							    <input 
+							    	type="text"
+							     	class="form-control"
+							
+							        id="name-field"
+							        aria-describedby="name-field"
+									placeholder="Enter name"
+									name="username"/>	
+									
+								<div class="invalid-feedback">
+						        
+						        </div>    
+						    </div>
+						    
+						    <div class="form-group">						    
+							    <label for="name-field">Password</label>
+							    
+							    <input 
+							    	type="password"
+							     	class="form-control"
+						
+							        id="name-field"
+							        aria-describedby="name-field"
+									placeholder="Enter name"
+									name="password"/>	
+									
+								<div class="invalid-feedback">
+						        
+						        </div>    
+						    </div>
+						    
+						    <div class="container text-center">									
+								<button type="submit" class="btn btn-success">Submit</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+</body>
+</html>

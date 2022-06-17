@@ -12,6 +12,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
+
+import org.hibernate.validator.constraints.Email;
 
 
 @Entity
@@ -22,11 +26,14 @@ public class User {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 	
+	@NotBlank(message="Must not be blank")
 	private String name;
 	
 	@Column(unique = true)
+	@Pattern(message="Must be email address", regexp= "^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$")	
 	private String email;
 	
+	@NotBlank(message="Must not be blank")
 	private String password;	
 
 	private String role;
