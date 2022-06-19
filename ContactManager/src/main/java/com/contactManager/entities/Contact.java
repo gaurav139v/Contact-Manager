@@ -17,7 +17,7 @@ public class Contact {
 	
 	private String name;
 	
-	private String secondName;
+	private String nickName;
 	
 	private String work;
 	
@@ -38,12 +38,12 @@ public class Contact {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Contact(int cid, String name, String secondName, String work, String email, String phone, String imageUrl,
+	public Contact(int cid, String name, String nickName, String work, String email, String phone, String imageUrl,
 			String description) {
 		super();
 		this.cid = cid;
 		this.name = name;
-		this.secondName = secondName;
+		this.nickName = nickName;
 		this.work = work;
 		this.email = email;
 		this.phone = phone;
@@ -67,12 +67,12 @@ public class Contact {
 		this.name = name;
 	}
 
-	public String getSecondName() {
-		return secondName;
+	public String getNickName() {
+		return nickName;
 	}
 
-	public void setSecondName(String secondName) {
-		this.secondName = secondName;
+	public void setNickName(String nickName) {
+		this.nickName = nickName;
 	}
 
 	public String getWork() {

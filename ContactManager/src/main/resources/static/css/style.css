@@ -1,5 +1,5 @@
 body {
-	background: lightgrey;
+	background: red;
 }
 
 .banner {
@@ -11,14 +11,22 @@ body {
 }
 
 .signup{	
-	height: 100vh;
+	height: 100%;
 	color: black;
 }
 
 .login {
-	height: 91vh;
+	height: 90vh;
 	color: black;
 }
+
+.add-contact {
+	height: 100%;
+	color: black;
+	position: relative;
+}
+
+
 
 .my-card {
 	margin-top: 10px;
@@ -31,3 +39,74 @@ body {
 	margin-top: 40px;
 }
 
+/* Toggle in dashboard*/
+
+@media only screen and (max-width: 300px){
+	.sidebar {
+		display: none;
+		width: 80% !important;
+		background: white;
+		height: 100%;
+		position: fixed;
+		padding-top: 20px;
+	}
+	
+	.content {
+		margin-left: 0% !important;
+	}
+}
+
+.sidebar {
+	width: 18%;
+	background: white;
+	height: 100%;
+	position: fixed;
+	padding-top: 45px;
+	x-index: 999999999999999999999;
+	
+}
+
+.sidebar a {
+	display: block;
+	width: 100%;
+	padding: 10px ;
+	text-decoration: none;
+	color: gray;
+}
+
+.sidebar a:hover {
+	background:  #ebfaeb;
+}
+
+.sidebar .divider {
+	height: .5px;
+	width: 100%;
+	background: #e2e2e2;
+	margin-top: 20px;
+}
+
+
+.sidebar .crossBtn {
+	position: absolute;
+	top: 5px;
+	right: 5px;
+	font-size: 32px;
+	cursor: pointer;
+}
+
+.sidebar .toggle-icon {
+	width:15px;
+	margin-top: -4px;
+	margin-right: 10px;
+	
+}
+
+.content {
+	margin-left: 18%;
+	
+	
+}
+
+.whole-content {
+	margin-top: 55px;
+}

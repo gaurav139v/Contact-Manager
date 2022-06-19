@@ -7,14 +7,16 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-	
+		
 	<link rel="stylesheet" th:href="@{/css/style.css}" />
+	
 	
     <title th:text="${title}">Base HTML</title>
   </head>
   
   <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="fixed-top navbar navbar-expand-lg navbar-light bg-light">
+      <img id="toggle-icon" onclick="toggleSidebar()" style="width:25px; margin: 10px" th:src="@{/img/icons/menu.png}" alt="icon">
 	  <a class="navbar-brand" href="#">Contact Manager</a>
 	  
 	  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -27,30 +29,41 @@
 	      <li class="nav-item active">
 	        <a class="nav-link" th:href="@{/}" href="#">Home <span class="sr-only">(current)</span></a>
 	      </li>
+	            
 	      
 	      <li class="nav-item">
-	        <a class="nav-link" th:href="@{/about/}" href="#">About</a>
+	        <a class="nav-link" th:href="@{/user/dashboard}" href="#" th:text="${user.name}"></a>
 	      </li>
 	      
 	      <li class="nav-item">
-	        <a class="nav-link" th:href="@{/user/dashboard}" href="#">Dashboard</a>
-	      </li>
-	      
-	      
-	      <li class="nav-item">
-	        <a class="nav-link" th:href="@{/signin}" href="#">Login</a>
-	      </li>
-	      
-	      <li class="nav-item">
-	        <a class="nav-link" th:href="@{/signup/}" href="#">Sign Up</a>
+	        <a class="nav-link" th:href="@{/logout}" href="#">Logout</a>
 	      </li>
 	    </ul>
 	    
 	  </div>
 	</nav>
     
-    <div th:replace="${content}"></div>
-
+    <div class="whole-content">
+	    <div class="sidebar">
+	    	
+	    	<span onclick="toggleSidebar()" class="crossBtn">&times;</span>
+	    	<a href="#" class="item"><img class="toggle-icon" th:src="@{/img/icons/home.png}" alt="icon">Home</a>
+	    	<a href="#" class="item"><img class="toggle-icon" th:src="@{/img/icons/profile.png}" alt="icon">Profile</a>
+	    	<a href="#" class="item"><img class="toggle-icon" th:src="@{/img/icons/contact-book.png}" alt="icon">View Contacts</a>
+	    	<a href="#" th:href="@{/user/add-contact-form}" class="item"><img class="toggle-icon" th:src="@{/img/icons/add-contact.png}" alt="icon">Add Contact</a>
+	    	<a href="#" class="item"><img class="toggle-icon" th:src="@{/img/icons/settings.png}" alt="icon">Setting</a>
+	    	<a href="#" class="item"><img class="toggle-icon" th:src="@{/img/icons/logout.png}" alt="icon">Logout</a>
+	    	<div class="divider"></div>
+	    	
+	    </div>
+	    
+	    <div class="content">
+	    	
+	    	<!-- <img id="toggle-icon" onclick="toggleSidebar()" style="width:25px; margin: 10px" th:src="@{/img/icons/menu.png}" alt="icon"> -->
+	    	<div th:replace="${content}"></div>
+	    
+	    </div>
+	</div>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
