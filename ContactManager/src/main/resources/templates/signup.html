@@ -13,12 +13,12 @@
 					<div class="my-card">
 						<div th:if="${session.message}" th:classappend="${session.message.type}" class="alert text-center" role="alert">
 						  <span th:text="${session.message.content}"></span>
-						  <span th:if="${session.status}"><a th:href="@{/login/}">Click here</a> to login</span>
+						  <span th:if="${session.status}"><a th:href="@{/signin}">Click here</a> to login</span>
 						  <th:block th:text="${#session.removeAttribute('message')}"></th:block>
 						</div>
 					
 						<div class="container text-center">
-							<img style="width:50px" th:src="@{/img/add-user.png}" alt="icon">
+							<img style="width:50px" th:src="@{/img/icons/add-user.png}" alt="icon">
 						</div>
 						<h3 class="text-center">Sign Up</h3>
 						
