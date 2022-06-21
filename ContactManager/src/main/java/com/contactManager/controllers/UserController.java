@@ -21,6 +21,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -142,4 +143,22 @@ public class UserController {
 		
 		return "user/contact";
 	}
+	
+	@GetMapping("/contact/delete/{cid}")
+	public String deleteContact(@PathVariable("cid") Integer cid, Model model, HttpSession session) {
+		
+		User user = (User) model.getAttribute("user");
+		Contact contact = this.contactRepository.findById(cid).get();
+		
+		if(user.getId() == contact.getUser().getId()) {
+			this.contactRepository.delete(contact);
+			session.setAttribute("message", new Message("Contact deleted!", "success"));
+			
+		}else {
+			session.setAttribute("message", new Message("Unauthorized URL!", "danger"));
+		}
+		
+		return "redirect:/user/view-contacts/0";
+	}
+	
 }
