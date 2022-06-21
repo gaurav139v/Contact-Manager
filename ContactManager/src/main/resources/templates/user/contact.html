@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="user/base::layout(~{::section})">
+<head>
+	<meta charset="UTF-8" />
+	<title>Home Page</title>
+</head>
+<body>
+	
+	<section class="banner view-contacts">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-10 offset-md-1 mt-2 ">
+					<div class="my-card" th:object="${contact}">
+						
+						<!-- When user try to to access unauthorized link -->
+						<div class="text-center" th:unless="${contact}">
+							<h3>Unauthorized Access</h3>
+						</div>
+					
+						<div th:if="${contact}">
+							<div class="text-center">
+								<div >
+									<img class="profile-image" alt="" src="" th:src="@{/img/profile/} + ${contact.imageUrl}">
+								</div>
+							
+								<h3 class="text-center mt-2" th:text="${contact.name} +' (' + ${contact.nickName} + ')'">Contacts</h3>
+							</div>
+							
+								<table class="table text-center">
+								  
+								    <tr>
+								      <th scope="col" >Phone</th>
+								      <td th:text="${contact.phone}">First</td>
+								     
+								    </tr>
+								  
+								    <tr>
+								      <th scope="row">Email</th>
+								      <td th:text="${contact.email}">Mark</td>
+								      
+								    </tr>
+								    <tr>
+								      <th scope="row">Work</th>
+								      <td th:text="${contact.work}">Jacob</td>
+								      
+								    </tr>			    
+								    
+								  
+								</table>
+						
+							
+							<p class="contact-description text-center mt-2" th:text="${contact.description}"></p>
+						
+						</div>
+						
+						
+						
+																	
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		
+    
+	</section>
+	
+</body>
+</html>
