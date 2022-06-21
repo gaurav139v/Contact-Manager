@@ -13,9 +13,8 @@
 				<div class="col-md-8 offset-md-2">
 					<div class="my-card">
 					
-						<div th:if="${session.message}" th:classappend="${session.message.type}" class="alert text-center" role="alert">
-						  <span th:text="${session.message.content}"></span>
-						  <span th:if="${session.status}"><a th:href="@{/signin}">Click here</a> to login</span>
+						<div th:if="${session.message}" th:classappend="'alert-' + ${session.message.type}" class="alert text-center" role="alert">
+						  <span th:text="${session.message.content}"></span>						  
 						  <th:block th:text="${#session.removeAttribute('message')}"></th:block>
 						</div>
 					
@@ -123,7 +122,7 @@
 								<label for="about-field">Description</label>
 								<textarea 
 									name="description"
-								 	id="description-field"
+								 	id="textarea"
 								 	th:classappend="${#fields.hasErrors('description')? 'is-invalid':''}"
 								    rows="3"
 								    class="form-control"
@@ -151,6 +150,14 @@
 				</div>
 			</div>
 		</div>
+		
+		<!-- Scripts  -->
+		<script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+		<script>
+	      tinymce.init({
+	        selector: '#mytextarea'
+	      });
+	    </script>
 	</section>
 	
 </body>

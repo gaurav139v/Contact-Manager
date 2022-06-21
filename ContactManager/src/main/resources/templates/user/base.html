@@ -49,10 +49,10 @@
 	    	<span onclick="toggleSidebar()" class="crossBtn">&times;</span>
 	    	<a href="#" class="item"><img class="toggle-icon" th:src="@{/img/icons/home.png}" alt="icon">Home</a>
 	    	<a href="#" class="item"><img class="toggle-icon" th:src="@{/img/icons/profile.png}" alt="icon">Profile</a>
-	    	<a href="#" class="item"><img class="toggle-icon" th:src="@{/img/icons/contact-book.png}" alt="icon">View Contacts</a>
+	    	<a href="#" th:href="@{/user/view-contacts/0}" class="item"><img class="toggle-icon" th:src="@{/img/icons/contact-book.png}" alt="icon">View Contacts</a>
 	    	<a href="#" th:href="@{/user/add-contact-form}" class="item"><img class="toggle-icon" th:src="@{/img/icons/add-contact.png}" alt="icon">Add Contact</a>
 	    	<a href="#" class="item"><img class="toggle-icon" th:src="@{/img/icons/settings.png}" alt="icon">Setting</a>
-	    	<a href="#" class="item"><img class="toggle-icon" th:src="@{/img/icons/logout.png}" alt="icon">Logout</a>
+	    	<a href="#" th:href="@{/logout}" class="item"><img class="toggle-icon" th:src="@{/img/icons/logout.png}" alt="icon">Logout</a>
 	    	<div class="divider"></div>
 	    	
 	    </div>

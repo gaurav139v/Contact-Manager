@@ -6,6 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.NotBlank;
 
 
 @Entity
@@ -15,6 +16,7 @@ public class Contact {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int cid;
 	
+	@NotBlank(message="Must be field")
 	private String name;
 	
 	private String nickName;
@@ -23,6 +25,7 @@ public class Contact {
 	
 	private String email;
 	
+	@NotBlank(message="Must be field")
 	private String phone;
 	
 	private String imageUrl;
