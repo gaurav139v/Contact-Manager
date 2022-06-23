@@ -1,15 +1,10 @@
 package com.contactManager.controllers;
 
-
-
 import javax.servlet.http.HttpSession;
 
 import javax.validation.Valid;
 
-import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -18,19 +13,22 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.contactManager.dao.UserRepository;
+import com.contactManager.Exceptions.UserAlreadyRegistered;
+
 import com.contactManager.entities.User;
 import com.contactManager.helper.Message;
+import com.contactManager.services.HomeService;
+import com.contactManager.services.UserService;
 
 @Controller
 public class HomeController {
 	
 	@Autowired
-	private BCryptPasswordEncoder passwordEncoder;
+	private HomeService homeService;
 	
 	@Autowired
-	UserRepository userRepository;
-
+	private UserService userService;
+	
 	@GetMapping("/")
 	public String home(Model model) {
 		
@@ -58,47 +56,48 @@ public class HomeController {
 
 	@GetMapping("/signin")
 	public String login(Model model) {
+		
 		model.addAttribute("title", "Login - Contact Manager");
 		return "login";
 	}
 	
+	/*
+	 * This end point will register the user
+	 * 
+	 * */	
 	@PostMapping("/do-signup")
-	public String registerUser(@Valid @ModelAttribute("user") User user, BindingResult bResult,
+	public String registerUser(@Valid @ModelAttribute("user") User user, BindingResult result,
 			@RequestParam(value = "aggreement", defaultValue="false") boolean aggreement,
 			Model model, HttpSession session
 			) {
 		
 		try {
-			if(!aggreement) {
-				System.out.println("Please aggree Terms and Conditions to proceed!");
+			
+			// Form data validation
+			if(!aggreement) {				
 				throw new Exception("Please aggree Terms and Conditions to proceed!");
 			}
 			
-			if(bResult.hasErrors()) {
+			if(result.hasErrors()) {
 				model.addAttribute("user", user);
 				return "signup";
 			}
 			
-			user.setRole("ROLE_USER");
-			user.setEnabled(true);
-			user.setImageUrl("default.png");
-			user.setPassword(this.passwordEncoder.encode(user.getPassword()));
-			
-			User result = this.userRepository.save(user);
-			
+			// save user
+			Integer userId = this.userService.registerUser(user);
+					
 			model.addAttribute("user", new User());
-			System.out.println(user);
-			System.out.println(aggreement);
-			
 			session.setAttribute("message", new Message("Successfully Registered.", "alert-success"));
 			session.setAttribute("status", true);
+			
 			return "signup";
 			
-		} catch (DataIntegrityViolationException e) {
+		} catch (UserAlreadyRegistered e) {
+			// When user is already registered.
 			e.printStackTrace();
 			user.setEmail("");
 			model.addAttribute("user", user);
-			session.setAttribute("message", new Message("Email address already registered.", "alert-danger"));
+			session.setAttribute("message", new Message(e.getMessage(), "alert-danger"));
 			session.setAttribute("status", false);
 			return "signup";
 			
@@ -107,9 +106,9 @@ public class HomeController {
 			model.addAttribute("user", user);
 			session.setAttribute("message", new Message(e.getMessage(), "alert-danger"));
 			session.setAttribute("status", false);
-			return "signup";
-			
+			return "signup";			
 		} 
 	}
+
 	
 }

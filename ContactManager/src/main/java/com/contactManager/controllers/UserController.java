@@ -40,6 +40,8 @@ import com.contactManager.helper.Message;
 @RequestMapping("/user")
 public class UserController {
 	
+	private static final String User = null;
+
 	@Autowired
 	private UserRepository userRepository;
 	
@@ -49,15 +51,14 @@ public class UserController {
 	@ModelAttribute
 	public void commonAttributes(Model model, Principal principal) {
 		
-		String username = principal.getName();
-		
+		String username = principal.getName();		
 		User user = this.userRepository.getUserByUsername(username);
 		
 		model.addAttribute("user", user);	
 	}
 
 	@RequestMapping("/dashboard")
-	public String dashboard(Model model, Principal principal) {
+	public String dashboard(Model model) {
 		
 		model.addAttribute("title", "Dashboard - Contact Manager");		
 		
@@ -77,6 +78,7 @@ public class UserController {
 			@RequestParam("profileImage") MultipartFile file, Model model,
 			HttpSession session) {
 		
+		// Form data validation
 		if(result.hasErrors()) {
 			model.addAttribute("contact", contact);
 			return "user/contact_form";
@@ -112,6 +114,7 @@ public class UserController {
 		return "user/contact_form";
 	}
 	
+	// user controller
 	@GetMapping("/view-contacts/{page}")
 	public String viewContactPage(@PathVariable("page") Integer page, Model model, Principal principal) {
 		
@@ -128,6 +131,7 @@ public class UserController {
 		
 		return "user/view_contacts";
 	}
+	
 	
 	@GetMapping("/contact/{cid}")
 	public String viewContact(@PathVariable("cid") Integer cid, Model model) {
@@ -146,19 +150,43 @@ public class UserController {
 	
 	@GetMapping("/contact/delete/{cid}")
 	public String deleteContact(@PathVariable("cid") Integer cid, Model model, HttpSession session) {
+		try {
+			
+			User user = (User) model.getAttribute("user");
+			Contact contact = this.contactRepository.findById(cid).get();
+			
+			if(user.getId() == contact.getUser().getId()) {
+				this.contactRepository.delete(contact);
+				session.setAttribute("message", new Message("Contact deleted!", "success"));
+				
+				// delete profile image
+				File saveFile = new ClassPathResource("static/img/profile").getFile();
+				
+				Path path = Paths.get(saveFile.getAbsolutePath() + File.separator + contact.getImageUrl());
+				
+				Files.delete(path);
+				
+				
+			}else {
+				session.setAttribute("message", new Message("Unauthorized URL!", "danger"));
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return "redirect:/user/view-contacts/0";
+	}
+	
+	@GetMapping("/update-contact/{cid}")
+	public String updateContactPage(@PathVariable("cid") Integer cid, Model model) {
 		
 		User user = (User) model.getAttribute("user");
 		Contact contact = this.contactRepository.findById(cid).get();
 		
-		if(user.getId() == contact.getUser().getId()) {
-			this.contactRepository.delete(contact);
-			session.setAttribute("message", new Message("Contact deleted!", "success"));
-			
-		}else {
-			session.setAttribute("message", new Message("Unauthorized URL!", "danger"));
-		}
+		model.addAttribute("contact", contact);
 		
-		return "redirect:/user/view-contacts/0";
+		return "user/update_contact";
 	}
 	
 }
