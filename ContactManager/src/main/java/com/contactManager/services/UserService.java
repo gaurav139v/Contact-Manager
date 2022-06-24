@@ -23,6 +23,17 @@ import com.contactManager.entities.User;
 public class UserService {
 	
 	@Autowired
+	private User user;	
+	
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	@Autowired
 	private UserRepository userRepository;
 	
 	@Autowired
@@ -56,6 +67,12 @@ public class UserService {
 		user = this.userRepository.save(user);
 		
 		return user.getId();
+	}
+
+	@Override
+	public String toString() {
+		return "UserService [user=" + user + ", userRepository=" + userRepository + ", contactRepository="
+				+ contactRepository + ", passwordEncoder=" + passwordEncoder + "]";
 	}
 	
 	/*
@@ -92,5 +109,6 @@ public class UserService {
 //		user = this.userRepository.save(user);
 //		return user;
 //	}
+	
 	
 }

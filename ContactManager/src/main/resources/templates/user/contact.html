@@ -14,7 +14,7 @@
 						
 						<!-- When user try to to access unauthorized link -->
 						<div class="text-center" th:unless="${contact}">
-							<h3>Unauthorized Access</h3>
+							<h3 th:text="${message.content}">Unauthorized Access</h3>
 						</div>
 					
 						<div th:if="${contact}">

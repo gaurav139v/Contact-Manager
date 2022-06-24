@@ -13,7 +13,7 @@
 					<div class="my-card text-center">
 					
 						<div th:if="${totalPages <=0 }">
-							<h3>No Data Available</h3>
+							<h3 th:text="${message.content}">No Data Available</h3>
 						</div>
 					
 					
@@ -58,7 +58,7 @@
 						      
 						      <td  th:text="${contact.phone}"></td>
 						      <td>
-						      	<a th:href="@{'/user/contact/delete/' + ${contact.cid}}" class="btn btn-danger btn-sm">Delete</a>
+						      	<a th:href="@{'/user/delete-contact/' + ${contact.cid}}" class="btn btn-danger btn-sm">Delete</a>
 						      	<a th:href="@{'/user/update-contact/' + ${contact.cid}}" class="btn btn-primary btn-sm">Update</a>
 						      </td>
 						    

@@ -49,10 +49,10 @@ public class ContactService {
 	}
 
 		
-	public Page<Contact> getContacts(Integer cid, Integer page) throws NoDataAvailable {
+	public Page<Contact> getContacts(Integer userId, Integer page) throws NoDataAvailable {
 		
 		PageRequest pageable = PageRequest.of(page, this.contactsPerPage);		
-		Page<Contact> contacts = this.contactRepository.getContactByUserId(cid, pageable);
+		Page<Contact> contacts = this.contactRepository.getContactByUserId(userId, pageable);
 		
 		if(contacts.getTotalPages() == 0) {
 			throw new NoDataAvailable();
@@ -74,11 +74,11 @@ public class ContactService {
 	
 	public Contact getContact(String phone) throws UnauthorizedUrl {
 		
-		Contact contact = this.contactRepository.getContactByPhone(phone);
+		Contact contact = this.contactRepository.getContactByPhone(phone, this.user.getId());
 		
-		if (contact.getUser().getId() != this.user.getId()) {
-			throw new UnauthorizedUrl();
-		}
+//		if (contact != null && contact.getUser().getId() != this.user.getId()) {
+//			throw new UnauthorizedUrl();
+//		}
 		
 		return contact;
 	}
@@ -96,7 +96,7 @@ public class ContactService {
 	
 	public Contact updateContact(Integer cid) throws UnauthorizedUrl {
 		
-		Contact contact = this.getContact(cid);
+		Contact contact = this.getContact(cid);	
 		
 		return contact;
 	}
@@ -113,12 +113,11 @@ public class ContactService {
 			contact.setUser(this.user);
 			this.user.getContacts().add(contact);
 			
-			if(!profileImage.isEmpty()) {
-				
-				contact.setImageUrl(profileImage.getOriginalFilename());
-				File saveFile = new ClassPathResource("static/img/profile").getFile();			
-				Path path = Paths.get(saveFile.getAbsolutePath() + File.separator + "IMG" +contact.getCid());			
-				Files.copy(profileImage.getInputStream(), path , StandardCopyOption.REPLACE_EXISTING);
+			if(!profileImage.isEmpty()) {	
+				String filename = "IMG" + contact.getCid();
+				this.helper.saveProfileImage(filename, profileImage);
+
+				contact.setImageUrl(filename);
 				
 			}else {
 				contact.setImageUrl("default.png");
@@ -131,4 +130,11 @@ public class ContactService {
 		this.user = this.userRepository.save(user);
 		return this.user;
 	}
+
+	@Override
+	public String toString() {
+		return "ContactService [contactsPerPage=" + contactsPerPage + ", contactRepository=" + contactRepository
+				+ ", userRepository=" + userRepository + ", user=" + user + ", helper=" + helper + "]";
+	}
+	
 }

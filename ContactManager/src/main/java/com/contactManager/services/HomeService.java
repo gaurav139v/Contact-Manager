@@ -11,8 +11,6 @@ import com.contactManager.entities.User;
 @Service
 public class HomeService {
 	
-	@Autowired
-	private UserRepository userRepository;
-	
+
 	
 }
