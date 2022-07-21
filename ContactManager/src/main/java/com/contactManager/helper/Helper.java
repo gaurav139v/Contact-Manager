@@ -42,8 +42,8 @@ public class Helper {
 		
 		try {
 			
-			filename = filename + imageFormat;
-			
+			filename = filename + ".png";
+			System.out.println(filename);
 			File saveFile = new ClassPathResource("static/img/profile").getFile();			
 			Path path = Paths.get(saveFile.getAbsolutePath() + File.separator + filename);			
 			Files.copy(image.getInputStream(), path , StandardCopyOption.REPLACE_EXISTING);

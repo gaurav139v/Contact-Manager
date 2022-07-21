@@ -20,7 +20,7 @@
 						<div th:if="${contact}">
 							<div class="text-center">
 								<div >
-									<img class="profile-image" alt="" src="" th:src="@{/img/profile/} + ${contact.imageUrl}">
+									<img class="profile-image" alt="" src="" th:src="@{/img/profile/} + ${contact.imageUrl} + '.png'">
 								</div>
 							
 								<h3 class="text-center mt-2" th:text="${contact.name} +' (' + ${contact.nickName} + ')'">Contacts</h3>

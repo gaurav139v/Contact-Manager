@@ -1,14 +1,9 @@
 package com.contactManager.services;
 
-import java.io.File;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
-import java.util.Optional;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ClassPathResource;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -75,11 +70,7 @@ public class ContactService {
 	public Contact getContact(String phone) throws UnauthorizedUrl {
 		
 		Contact contact = this.contactRepository.getContactByPhone(phone, this.user.getId());
-		
-//		if (contact != null && contact.getUser().getId() != this.user.getId()) {
-//			throw new UnauthorizedUrl();
-//		}
-		
+			
 		return contact;
 	}
 	
@@ -114,13 +105,16 @@ public class ContactService {
 			this.user.getContacts().add(contact);
 			
 			if(!profileImage.isEmpty()) {	
-				String filename = "IMG" + contact.getCid();
+				String filename = "IMG-" + String.join("", UUID.randomUUID().toString().split("-"));
 				this.helper.saveProfileImage(filename, profileImage);
 
 				contact.setImageUrl(filename);
 				
 			}else {
-				contact.setImageUrl("default.png");
+				if(contactExist.getImageUrl().isBlank()) {
+					contact.setImageUrl("default");
+				}
+				System.out.println(contact.getImageUrl());
 			}
 			
 		} catch (Exception e) {
