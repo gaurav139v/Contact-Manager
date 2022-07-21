@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="user/base::layout(~{::section})">
+<head>
+	<meta charset="UTF-8" />
+	<title>Add Contact Page</title>
+</head>
+<body>
+	
+	<section class="banner add-contact">
+		
+		<div class="container">
+			<div class="row">
+				<div class="col-md-8 offset-md-2">
+					<div class="my-card">
+					
+						<div th:if="${session.message}" th:classappend="'alert-' + ${session.message.type}" class="alert text-center" role="alert">
+						  <span th:text="${session.message.content}"></span>						  
+						  <th:block th:text="${#session.removeAttribute('message')}"></th:block>
+						</div>
+					
+						<div class="container text-center">
+							<img  class="profile_image_update" th:src="@{'/img/profile/' + ${contact.imageUrl} + '.png'}" alt="icon">
+						</div>
+						<h3 class="text-center">Update Contact</h3>
+						
+						<form action="" 
+							th:action="@{/user/add-contact}"
+						    method="post"
+						    th:object="${contact}"
+						    enctype="multipart/form-data">
+						    
+						    <input hidden type="text" th:value="${contact.cid}" name="cid" />
+							
+							<div class="form-group">						    
+							    <label for="name-field">Name</label>
+							    
+							    <input 
+							    	type="name"
+							     	class="form-control"
+							     	th:classappend="${#fields.hasErrors('name')?'is-invalid':''}"
+							        id="name-field"
+							        aria-describedby="name-field"
+									placeholder="Enter name"
+									name="name"
+									th:value="${contact.name}"/>	
+									
+								<div class="invalid-feedback" th:each="e : ${#fields.errors('name')}" th:text="${e}">
+						        
+						        </div>    
+						    </div>
+						    
+						    <div class="form-group">						    
+							    <label for="name-field">Nick Name</label>
+							    
+							    <input 
+							    	type="text"
+							     	class="form-control"
+							     	th:classappend="${#fields.hasErrors('nickName')?'is-invalid':''}"
+							        id="nickName-field"
+							        aria-describedby="nickName-field"
+									placeholder="Enter nick name"
+									name="nickName"
+									th:value="${contact.nickName}"/>	
+									
+								<div class="invalid-feedback" th:each="e : ${#fields.errors('nickName')}" th:text="${e}">
+						        
+						        </div>    
+						    </div>
+						    
+						    <div class="form-group">						    
+							    <label for="name-field">Work</label>
+							    
+							    <input 
+							    	type="text"
+							     	class="form-control"
+							     	th:classappend="${#fields.hasErrors('work')?'is-invalid':''}"
+							        id="work-field"
+							        aria-describedby="work-field"
+									placeholder="Enter work"
+									name="work"
+									th:value="${contact.work}"/>	
+									
+								<div class="invalid-feedback" th:each="e : ${#fields.errors('work')}" th:text="${e}">
+						        
+						        </div>    
+						    </div>
+						    
+						    <div class="form-group">						    
+							    <label for="email-field">Email</label>
+							    
+							    <input 
+							    	type="email"
+							     	class="form-control"
+							     	th:classappend="${#fields.hasErrors('email')? 'is-invalid':''}"
+							        id="email-field"
+							        aria-describedby="email-field"
+									placeholder="Enter email"
+									name="email"
+									th:value="${contact.email}"/>
+									
+								<div class="invalid-feedback" th:each="e : ${#fields.errors('email')}" th:text="${e}"></div>
+						    </div>
+						    
+					       <div class="form-group">						    
+							    <label for="name-field">Phone</label>
+							    
+							    <input 
+							    	type="text"
+							     	class="form-control"
+							     	th:classappend="${#fields.hasErrors('phone')?'is-invalid':''}"
+							        id="phone-field"
+							        aria-describedby="phone-field"
+									placeholder="Enter phone number"
+									name="phone"
+									th:value="${contact.phone}"/>	
+									
+								<div class="invalid-feedback" th:each="e : ${#fields.errors('phone')}" th:text="${e}">
+						        
+						        </div>    
+						    </div>					    
+						
+							
+							<div class="form-group">
+								<label for="about-field">Description</label>
+								<textarea 
+									name="description"
+								 	id="textarea"
+								 	th:classappend="${#fields.hasErrors('description')? 'is-invalid':''}"
+								    rows="3"
+								    class="form-control"
+								    placeholder="Enter about yourself"
+								    th:text="${contact.description}" ></textarea>
+								    
+								    <div class="invalid-feedback" th:each="e : ${#fields.errors('description')}" th:text="${e}"></div>
+							</div>
+							
+							<div class="mb-3">
+								<label for="formFile" class="form-label">Profile picture</label>
+								<input 
+									class="form-control"
+								 	type="file"
+								 	id="formFile"
+								 	name="profileImage">
+							</div>
+														
+							<div class="container text-center">
+								<button type="reset" class="btn btn-info">Reset</button>	
+								<button type="submit" class="btn btn-success">Update</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		
+		<!-- Scripts  -->
+		<script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+		
+		<script>
+	      tinymce.init({
+	        selector: '#mytextarea'
+	      });
+	    </script>
+	    
+	    <!-- pop up scripts -->
+	    
+	   <!--  <script>
+	    	function imagePopUp(path) {
+	    		console.log(path);
+	    		Swal.fire({
+				  imageUrl: path,
+				  imageHeight: 500,
+				  imageAlt: 'A tall image'
+				})
+	    	}
+	    	
+	    </script>
+	   -->
+	    
+	  
+	</section>
+	
+</body>
+</html>
